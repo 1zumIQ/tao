@@ -387,6 +387,17 @@ impl Window {
     });
   }
 
+  #[inline]
+  pub fn set_focusable(&self, focusable: bool) {
+    let window = self.window.0 .0 as isize;
+    let window_state = Arc::clone(&self.window_state);
+    self.thread_executor.execute_in_thread(move || {
+      WindowState::set_window_flags(window_state.lock(), HWND(window as _), |f| {
+        f.set(WindowFlags::CLOSABLE, focusable)
+      });
+    });
+  }
+
   /// Returns the `hwnd` of this window.
   #[inline]
   pub fn hwnd(&self) -> HWND {
@@ -639,6 +650,12 @@ impl Window {
   pub fn is_closable(&self) -> bool {
     let window_state = self.window_state.lock();
     window_state.window_flags.contains(WindowFlags::CLOSABLE)
+  }
+
+  #[inline]
+  pub fn is_focusable(&self) -> bool {
+    let window_state = self.window_state.lock();
+    window_state.window_flags.contains(WindowFlags::FOCUSABLE)
   }
 
   #[inline]
@@ -1130,6 +1147,8 @@ unsafe fn init<T: 'static>(
   // will be changed later using `window.set_closable`
   // but we need to have a default for the diffing to work
   window_flags.set(WindowFlags::CLOSABLE, true);
+
+  window_flags.set(WindowFlags::FOCUSABLE, attributes.focusable);
 
   window_flags.set(WindowFlags::MARKER_DONT_FOCUS, !attributes.focused);
 

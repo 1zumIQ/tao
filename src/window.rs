@@ -249,6 +249,13 @@ pub struct WindowAttributes {
   /// **Android / iOS:** Unsupported.
   pub focused: bool,
 
+  /// Whether the window can be focused or not.
+  ///
+  /// ## Platform-specific:
+  ///
+  /// **Android / iOS / Linux / macOS:** Unsupported.
+  pub focusable: bool,
+
   /// Prevents the window contents from being captured by other apps.
   ///
   /// ## Platform-specific
@@ -294,6 +301,7 @@ impl Default for WindowAttributes {
       window_icon: None,
       preferred_theme: None,
       focused: true,
+      focusable: true,
       content_protection: false,
       visible_on_all_workspaces: false,
       background_color: None,
@@ -538,6 +546,18 @@ impl WindowBuilder {
     self.window.focused = focused;
     self
   }
+
+  /// Whether the window can be focused or not.
+  ///
+  /// ## Platform-specific:
+  ///
+  /// **Android / iOS / Linux / macOS:** Unsupported.
+  #[inline]
+  pub fn with_focusable(mut self, focusable: bool) -> WindowBuilder {
+    self.window.focusable = focusable;
+    self
+  }
+
   /// Prevents the window contents from being captured by other apps.
   ///
   /// ## Platform-specific
@@ -813,6 +833,26 @@ impl Window {
   #[inline]
   pub fn set_visible(&self, visible: bool) {
     self.window.set_visible(visible)
+  }
+
+  /// Sets whether the window is focusable or not.
+  ///
+  /// ## Platform-specific
+  ///
+  /// - **iOS / Android / Linux / macOS:** Unsupported.
+  #[inline]
+  pub fn set_focusable(&self, focusable: bool) {
+    self.window.set_focusable(focusable)
+  }
+  
+  /// Is window focusable?
+  ///
+  /// ## Platform-specific
+  ///
+  /// - **iOS / Android / Linux / macOS:** Unsupported.
+  #[inline]
+  pub fn is_focusable(&self) -> bool {
+    self.window.is_focusable()
   }
 
   /// Bring the window to front and focus.
