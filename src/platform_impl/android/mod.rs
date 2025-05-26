@@ -569,6 +569,11 @@ impl Window {
     false
   }
 
+  pub fn is_focusable(&self) -> bool {
+    log::warn!("`Window::is_focusable` is ignored on Android");
+    true
+  }
+
   pub fn is_always_on_top(&self) -> bool {
     log::warn!("`Window::is_always_on_top` is ignored on Android");
     false
@@ -588,6 +593,10 @@ impl Window {
 
   pub fn set_closable(&self, _closable: bool) {
     warn!("`Window::set_closable` is ignored on Android")
+  }
+
+  pub fn set_focusable(&self, _focusable: bool) {
+    warn!("`Window::set_focusable` is ignored on Android");
   }
 
   pub fn set_minimized(&self, _minimized: bool) {}

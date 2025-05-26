@@ -598,6 +598,11 @@ impl Window {
     self.window.is_active()
   }
 
+  pub fn is_focusable(&self) -> bool {
+    log::warn!("`Window::is_focusable` is ignored on Linux");
+    false
+  }
+
   pub fn set_resizable(&self, resizable: bool) {
     if let Err(e) = self
       .window_requests_tx
@@ -618,6 +623,10 @@ impl Window {
     {
       log::warn!("Fail to send closable request: {}", e);
     }
+  }
+
+  pub fn set_focusable(&self, focusable: bool) {
+    log::warn!("`Window::set_focusable` is ignored on Linux");
   }
 
   pub fn set_minimized(&self, minimized: bool) {

@@ -844,7 +844,7 @@ impl Window {
   pub fn set_focusable(&self, focusable: bool) {
     self.window.set_focusable(focusable)
   }
-  
+
   /// Is window focusable?
   ///
   /// ## Platform-specific

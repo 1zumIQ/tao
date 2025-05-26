@@ -77,6 +77,11 @@ impl Inner {
     false
   }
 
+  pub fn is_focusable(&self) -> bool {
+    log::warn!("`Window::is_focusable` is ignored on iOS");
+    false
+  }
+
   pub fn is_always_on_top(&self) -> bool {
     log::warn!("`Window::is_always_on_top` is ignored on iOS");
     false
@@ -193,6 +198,10 @@ impl Inner {
 
   pub fn set_closable(&self, _closable: bool) {
     warn!("`Window::set_closable` is ignored on iOS")
+  }
+
+  pub fn set_focusable(&self, _focusable: bool) {
+    warn!("`Window::set_focusable` is ignored on iOS")
   }
 
   pub fn scale_factor(&self) -> f64 {
