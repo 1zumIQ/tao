@@ -1097,7 +1097,7 @@ impl<T: 'static> EventLoop<T> {
             EventState::EventQueue => match control_flow {
               ControlFlow::ExitWithCode(code) => {
                 callback(Event::LoopDestroyed, window_target, &mut control_flow);
-                break (code);
+                break code;
               }
               _ => match events.try_recv() {
                 Ok(event) => match event {
